@@ -7,7 +7,7 @@
   },
   "globals": {
     "THREE": true,
-    "Victor": true,
+    "ReImg": true,
     "globalCompositeOperationModes": true
   },
   "rules": {
