@@ -52,6 +52,11 @@ const PI_DOUBLE = 2 * Math.PI;
 // eslint-disable-next-line no-unused-vars
 const PI_HALF = Math.PI / 2;
 
+// height="2160" width="3840"
+
+// canvasDOMEl.setAttribute("height", 2160);
+// canvasDOMEl.setAttribute("width", 3840);
+
 canvasDOMEl.setAttribute("height", window.innerHeight);
 canvasDOMEl.setAttribute("width", window.innerWidth);
 
@@ -85,46 +90,52 @@ const textures = [
   "t4.png",
   "white_wash.jpg"
 ];
-const texture = new Image();
-const f = () => `./textures/${textures.splice(randomInt(0, textures.length - 1), 1)}`;
 
-let pos = f();
+function generate() {
+  const texture = new Image();
+  const f = () => `./textures/${textures.splice(randomInt(0, textures.length - 1), 1)}`;
 
-texture.src = pos;
-const texture2 = new Image();
+  let pos = f();
 
-pos = f();
-texture2.src = pos;
+  texture.src = pos;
+  const texture2 = new Image();
 
-let loaded = 0;
+  pos = f();
+  texture2.src = pos;
 
-function checkLoaded() {
-  if (loaded < 2) return;
+  let loaded = 0;
 
-  ctx.clearRect(0, 0, w, h);
+  function checkLoaded() {
+    if (loaded < 2) return;
 
-  ctx.globalCompositeOperation = globalCompositeOperationModes.overlay;
-  ctx.filter = `hue-rotate(${randomInt(0, 360)}deg)`;
+    ctx.clearRect(0, 0, w, h);
 
-  ctx.save();
-  ctx.filter = `blur(${randomFloat(0, 2)}px) hue-rotate(${randomFloat(0, 360)}deg)`;
-  ctx.drawImage(texture, 0, 0, w, h);
-  ctx.restore();
+    ctx.globalCompositeOperation = globalCompositeOperationModes.overlay;
+    ctx.filter = `hue-rotate(${randomInt(0, 360)}deg)`;
 
-  ctx.save();
-  ctx.filter = `blur(0px) hue-rotate(${randomFloat(0, 360)}deg)`;
-  ctx.drawImage(texture2, 0, 0, w + randomInt(0, 400), h + randomInt(0, 400));
-  ctx.restore();
+    ctx.save();
+    ctx.filter = `blur(${randomFloat(0, 2)}px) hue-rotate(${randomFloat(0, 360)}deg)`;
+    ctx.drawImage(texture, 0, 0, w, h);
+    ctx.restore();
 
-  //   ReImg.fromCanvas(document.getElementById("canvas")).downloadPng();
+    ctx.save();
+    ctx.filter = `blur(0px) hue-rotate(${randomFloat(0, 360)}deg)`;
+    ctx.drawImage(texture2, 0, 0, w + randomInt(0, 400), h + randomInt(0, 400));
+    ctx.restore();
+
+    ReImg.fromCanvas(document.getElementById("canvas")).downloadPng();
+  }
+
+  texture.onload = () => {
+    loaded++;
+    checkLoaded();
+  };
+
+  texture2.onload = () => {
+    loaded++;
+    checkLoaded();
+  };
 }
-
-texture.onload = () => {
-  loaded++;
-  checkLoaded();
-};
-
-texture2.onload = () => {
-  loaded++;
-  checkLoaded();
-};
+setInterval(() => {
+  generate();
+}, 5000);
