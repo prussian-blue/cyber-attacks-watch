@@ -24,8 +24,6 @@ export function init(container) {
     rootMesh.rotation.y += 0.0005;
     renderer.render(scene, camera);
     controls.update();
-
-    console.log(camera.position);
   }
 
   function addStarField() {
@@ -35,7 +33,7 @@ export function init(container) {
     veryBigSphereForStars.geometry.vertices
       .filter(x => Math.random() > 0.5)
       .forEach(starCoords => {
-        const geometry = new THREE.SphereGeometry(7, 3, 3);
+        const geometry = new THREE.SphereGeometry(5, 3, 3);
         const material = new THREE.MeshBasicMaterial({
           color: `rgb(255, 255, 255)`,
           transparent: true,
@@ -54,8 +52,7 @@ export function init(container) {
   }
 
   function addLights() {
-    const light = new THREE.HemisphereLight(0xffffff, 0x000000, 1.2);
-    light.castShadow = true;
+    const light = new THREE.HemisphereLight(0xffffff, 0x666666, 1.2);
     scene.add(light);
   }
 

@@ -87,7 +87,7 @@ const textures = [
   "t1.png",
   "t2.png",
   "t3.png",
-  "t4.png",
+  "t4.jpg",
   "white_wash.jpg"
 ];
 

@@ -1,5 +1,5 @@
 import init from "./globe";
-import "./reset.css";
-import "./style.css";
+import "./css/reset.css";
+import "./css/style.css";
 
 init(document.getElementById("globe-app"));
